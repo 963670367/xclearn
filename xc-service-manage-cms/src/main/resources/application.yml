@@ -1,0 +1,32 @@
+server:
+  port: 31002
+spring:
+  application:
+    name: xc-service-manage-cms
+  data:
+    mongodb:
+      uri: mongodb://root:123@localhost:27017/admin # /admin可以写，可以不写，登录到admin，然后切换到xc_cms数据库中
+      database: xc_cms
+  freemarker:
+    cache: false  # 关闭模版缓存，方便测试
+    settings:
+      template_update_delay: 0
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+eureka:
+  client:
+    register-with-eureka: true  #服务注册，是否将自己注册到Eureka服务中
+    fetch-registry: true  #服务发现，是否从Eureka中获取注册信息
+    service-url:  #Eureka客户端与Eureka服务端的交互地址，高可用状态配置对方的地址，单机状态配置自己（如果不配置则默认本机8761端口）
+      defaultZone: http://localhost:50101/eureka/,http://localhost:50102/eureka/  # 多个eureka相互注册，形成eureka集群
+  server:
+    enable-self-preservation: false  # 是否开启自我保护模式
+    eviction-interval-timer-in-ms: 60000  # 服务注册表清理间隔（单位：毫秒，默认60*1000）
+  instance:
+    prefer-ip-address: true  # 将自己的ip地址注册到Eureka服务中
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}   # 指定实例id

@@ -1,0 +1,7 @@
+FROM openjdk:9-jdk
+ENV ARTIFACTID xc-govern-center
+ENV ARTIFACTVERSION 1.0-SNAPSHOT
+ENV HOME_PATH /home
+WORKDIR $HOME_PATH
+ADD /$ARTIFACTID.jar $HOME_PATH/$ARTIFACTID.jar
+ENTRYPOINT ["java","-jar","xc-govern-center.jar"]
